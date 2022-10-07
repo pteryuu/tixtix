@@ -3,13 +3,19 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tixtix/blocs/counter.dart';
+import 'package:tixtix/ui/pages/ticket.dart';
 import '../../shared/theme.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final CubitCounter myCounter = CubitCounter();
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> screens = [
+      HomePage(),
+      const TicketPage(),
+    ];
     Widget customBottomNavigation() {
       return Align(
         alignment: Alignment.bottomCenter,
@@ -27,9 +33,11 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Stack(children: [
-        Text(
-          'Main Page',
-        ),
+        BlocBuilder(
+            bloc: myCounter,
+            builder: (context, state) {
+              return screens[myCounter.increment()];
+            }),
         customBottomNavigation()
       ]),
     );
@@ -40,15 +48,15 @@ class bottomNav extends StatelessWidget {
   List<dynamic> dataNavigationBottomBarItem = const [
     {
       'icon': Icon(Icons.home_mini_outlined),
-      'label': 'Latihan',
+      'label': 'Home',
     },
     {
       'icon': Icon(Icons.airplane_ticket_outlined),
-      'label': 'Laporan',
+      'label': 'Ticket',
     },
     {
       'icon': Icon(Icons.person),
-      'label': 'Profil',
+      'label': 'Profile',
     },
   ];
 
@@ -86,91 +94,5 @@ class bottomNav extends StatelessWidget {
         ],
       ),
     );
-
-    // return Row(
-    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //   children: [
-    //     Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         SizedBox(),
-    //         Container(
-    //           height: 24,
-    //           width: 24,
-    //           decoration: BoxDecoration(
-    //               image: DecorationImage(
-    //                   image: AssetImage('assets/icon_home.png'))),
-    //         ),
-    //         Container(
-    //           width: 30,
-    //           height: 2,
-    //           decoration: BoxDecoration(
-    //               color: kPrimaryColor,
-    //               borderRadius: BorderRadius.circular(18)),
-    //         )
-    //       ],
-    //     ),
-    //     Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         SizedBox(),
-    //         Container(
-    //           height: 24,
-    //           width: 24,
-    //           decoration: BoxDecoration(
-    //               image: DecorationImage(
-    //                   image: AssetImage('assets/icon_booking.png'))),
-    //         ),
-    //         Container(
-    //           width: 30,
-    //           height: 2,
-    //           decoration: BoxDecoration(
-    //               color: kPrimaryColor,
-    //               borderRadius: BorderRadius.circular(18)),
-    //         )
-    //       ],
-    //     ),
-    //     Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         SizedBox(),
-    //         Container(
-    //           height: 24,
-    //           width: 24,
-    //           decoration: BoxDecoration(
-    //               image: DecorationImage(
-    //                   image: AssetImage('assets/icon_card.png'))),
-    //         ),
-    //         Container(
-    //           width: 30,
-    //           height: 2,
-    //           decoration: BoxDecoration(
-    //               color: kPrimaryColor,
-    //               borderRadius: BorderRadius.circular(18)),
-    //         )
-    //       ],
-    //     ),
-    //     Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         SizedBox(),
-    //         Container(
-    //           height: 24,
-    //           width: 24,
-    //           decoration: BoxDecoration(
-    //               image: DecorationImage(
-    //                   image: AssetImage('assets/icon_settings.png'))),
-    //         ),
-    //         Container(
-    //           width: 30,
-    //           height: 2,
-    //           decoration: BoxDecoration(
-    //               color: kPrimaryColor,
-    //               borderRadius: BorderRadius.circular(18)),
-    //         )
-    //       ],
-    //     )
-    //   ],
-    // );
   }
 }
