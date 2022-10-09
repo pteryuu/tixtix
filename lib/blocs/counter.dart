@@ -20,11 +20,7 @@ class CounterBloc {
   CounterBloc() {
     //Event adalah data dari hasil inputan
     _inputController.stream.listen((event) {
-      if (event == 'add') {
-        _counter++;
-      } else {
-        _counter--;
-      }
+      _counter++;
 
       //Tambahkan data yang kita kirimkan ke controller
       _sinkOutput.add(_counter);

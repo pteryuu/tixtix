@@ -1,13 +1,20 @@
 import 'package:provider/provider.dart';
-import 'package:tixtix/ui/pages/get_started_pages.dart';
-import 'package:tixtix/ui/pages/login_page.dart';
-import 'package:tixtix/ui/pages/home_page.dart';
-import 'package:tixtix/ui/pages/sign_up_page.dart';
+import 'package:tixtix/pages/get_started.dart';
+import 'package:tixtix/pages/login.dart';
+import 'package:tixtix/pages/screen.dart';
+import 'package:tixtix/pages/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:tixtix/ui/pages/terms_and_condition_page.dart';
-import 'ui/pages/splash_page.dart';
+import 'package:tixtix/pages/splash.dart';
+import 'package:tixtix/pages/terms_and_condition.dart';
+import 'package:tixtix/providers/bottom_nav.dart';
+import 'package:tixtix/providers/ticket_provider.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MultiProvider(providers: [
+      ChangeNotifierProvider<BottomNavProvider>(
+          create: (context) => BottomNavProvider()),
+      ChangeNotifierProvider<TicketProvider>(
+          create: (context) => TicketProvider()),
+    ], child: const MyApp()));
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -15,11 +22,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(debugShowCheckedModeBanner: false, routes: {
-      '/': (context) => SplashPage(),
+      '/': (context) => const ScreenPage(),
       '/get-started': (context) => GetStartedPage(),
       '/sign-up': (context) => SignUpPage(),
       '/login': (context) => LoginPage(),
-      '/main': (context) => HomePage(),
+      '/screen': (context) => const ScreenPage(),
       '/terms': (context) => TCPage()
     });
   }

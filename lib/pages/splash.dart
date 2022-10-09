@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:tixtix/ui/pages/get_started_pages.dart';
+import 'package:tixtix/pages/get_started.dart';
 import 'package:flutter/material.dart';
 import '../../shared/theme.dart';
 

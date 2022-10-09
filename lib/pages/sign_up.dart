@@ -158,7 +158,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(defaultRadius))),
             onPressed: () {
-              Navigator.pushNamed(context, '/main');
+              Navigator.pushNamed(context, '/screen');
             },
             child: Text(
               'Get Started',
