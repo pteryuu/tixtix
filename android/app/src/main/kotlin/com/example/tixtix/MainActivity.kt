@@ -1,4 +1,4 @@
-package com.example.tixtix
+package com.alite.tixtix
 
 import io.flutter.embedding.android.FlutterActivity
 
