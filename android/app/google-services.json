@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "632756333883",
+    "project_id": "tixtix-alite",
+    "storage_bucket": "tixtix-alite.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632756333883:android:000ca75612545b3ef15b1e",
+        "android_client_info": {
+          "package_name": "com.alite.tixtix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632756333883-70u2c81to3s4dpfe4hukcitcg3bttqge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0jT7lYBZFkAD3HkUQuuH8MKbOEPVvqRo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "632756333883-70u2c81to3s4dpfe4hukcitcg3bttqge.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tixtix/pages/login.dart';
 import 'package:tixtix/pages/sign_up.dart';
@@ -30,7 +31,6 @@ class _TicketPageState extends State<TicketPage> {
             ),
             title: const Text(
               'Tabs Demo',
-              style: TextStyle(color: Colors.black),
             ),
           ),
           body: const TabBarView(

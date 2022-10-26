@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../shared/theme.dart';
@@ -10,9 +11,14 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  TextEditingController dateInputController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController birthController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    // FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // CollectionReference users = firestore.collection('users');
     Widget title() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -34,6 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 6,
             ),
             TextFormField(
+              controller: nameController,
               cursorColor: kBlackColor,
               decoration: InputDecoration(
                   hintText: 'Your full name',
@@ -57,6 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 6,
             ),
             TextFormField(
+              controller: emailController,
               cursorColor: kBlackColor,
               decoration: InputDecoration(
                   hintText: 'Your email address',
@@ -80,6 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 6,
             ),
             TextFormField(
+              controller: passController,
               obscureText: true,
               cursorColor: kBlackColor,
               decoration: InputDecoration(
@@ -104,6 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: 6,
             ),
             TextFormField(
+                controller: birthController,
                 cursorColor: kBlackColor,
                 decoration: InputDecoration(
                   hintText: 'Date of Birth',
@@ -113,7 +123,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       borderRadius: BorderRadius.circular(defaultRadius),
                       borderSide: BorderSide(color: kPrimaryColor)),
                 ),
-                controller: dateInputController,
                 readOnly: true,
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
@@ -141,7 +150,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (pickedDate != null) {
                     String formattedDate =
                         DateFormat('d MMMM y').format(pickedDate);
-                    dateInputController.text = formattedDate;
+                    birthController.text = formattedDate;
                   }
                 })
           ]),
@@ -158,6 +167,17 @@ class _SignUpPageState extends State<SignUpPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(defaultRadius))),
             onPressed: () {
+              // users.add({
+              //   'name': nameController.text,
+              //   'email': emailController.text,
+              //   'password': passController.text,
+              //   'birth': birthController.text,
+              // });
+              nameController.text = '';
+              emailController.text = '';
+              passController.text = '';
+              birthController.text = '';
+
               Navigator.pushNamed(context, '/screen');
             },
             child: Text(

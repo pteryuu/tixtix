@@ -1,4 +1,4 @@
-List<Map<String,dynamic>> data = [
+List<Map<String, dynamic>> data = [
   {
     'img': 'assets/poster-1.jpg',
     'title': 'TobaHarmoni',
