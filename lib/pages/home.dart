@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
                 child: CustomScrollView(
                   slivers: [
                     SliverAppBar(
+                      pinned: true,
                       forceElevated: true,
                       backgroundColor: Colors.white,
                       iconTheme: const IconThemeData(color: Colors.black),

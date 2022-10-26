@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tixtix/pages/get_started.dart';
 import 'package:tixtix/pages/login.dart';
 import 'package:tixtix/pages/screen.dart';
 import 'package:tixtix/pages/sign_up.dart';
-import 'package:flutter/material.dart';
-import 'package:tixtix/pages/splash.dart';
 import 'package:tixtix/pages/terms_and_condition.dart';
 import 'package:tixtix/providers/bottom_nav.dart';
 import 'package:tixtix/providers/ticket_provider.dart';
@@ -30,14 +29,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const ScreenPage(),
+        // '/': (context) => const ScreenPage(),
         '/get-started': (context) => GetStartedPage(),
         '/sign-up': (context) => SignUpPage(),
         '/login': (context) => LoginPage(),
         '/screen': (context) => const ScreenPage(),
         '/terms': (context) => TCPage()
       },
-      home: GetStartedPage(),
+      // home: GetStartedPage(),
+      home: const ScreenPage(),
     );
   }
 }

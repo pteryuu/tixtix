@@ -38,13 +38,10 @@ dependencies:
   equatable: ^2.0.5
   firebase_core: ^1.24.0
   firebase_performance_platform_interface: ^0.1.1+19
-  flutter:
-    sdk: flutter
   flutter_bloc: ^8.1.1
   google_fonts: ^3.0.1
   intl: ^0.17.0
   provider: ^6.0.3
-  carousel_slider: 4.0.0
   flutter:
     sdk: flutter
 
