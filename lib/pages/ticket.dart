@@ -78,7 +78,7 @@ class _TicketPageState extends State<TicketPage>{
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: TabBarView(
             children: [
               Column(
@@ -115,23 +115,15 @@ class _TicketCategories extends State<TicketCategories> {
         providers: [
           ChangeNotifierProvider(create: (context) => ActiveTicketProvider())
         ],
-        child: ListView(
+        child: ListView.builder(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
-          children: <Widget>[
-            SizedBox(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: activeTicketCategories.map((e) {
-                    return CustomChip(
-                      label: e,
-                    );
-                  }).toList(),
-                ),
-              ),
-            )
-          ],
+          itemCount: activeTicketCategories.length,
+          itemBuilder: (BuildContext context, int idx) {
+           return CustomChip(
+              label: activeTicketCategories[idx],
+            );
+          },
         ),
       )
     );
@@ -147,7 +139,7 @@ class CustomChip extends StatelessWidget {
     // print('build Custom Chip');
     ActiveTicketProvider provider = Provider.of<ActiveTicketProvider>(context);
     return Container(
-      margin: const EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(left: 16),
       child: ChoiceChip(
         padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
         selected: provider.getSelectedCategory == label,
@@ -167,7 +159,7 @@ class CustomChip extends StatelessWidget {
             color: provider.getSelectedCategory == label ? Colors.blue : kGreyColor
           ),
           borderRadius: const BorderRadius.all(Radius.circular(6.0))
-          ),
+        ),
       ),
     );
   }

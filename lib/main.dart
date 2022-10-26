@@ -36,8 +36,7 @@ class MyApp extends StatelessWidget {
         '/screen': (context) => const ScreenPage(),
         '/terms': (context) => TCPage()
       },
-      // home: GetStartedPage(),
-      home: const ScreenPage(),
+      home: GetStartedPage(),
     );
   }
 }
