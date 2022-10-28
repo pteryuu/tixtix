@@ -1,8 +1,33 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../shared/theme.dart';
 
-class GetStartedPage extends StatelessWidget {
+class GetStartedPage extends StatefulWidget {
   const GetStartedPage({Key? key}) : super(key: key);
+
+  @override
+  State<GetStartedPage> createState() => _GetStartedPageState();
+}
+
+class _GetStartedPageState extends State<GetStartedPage> {
+  void initState() {
+    // TODO: implement initState
+    Timer(Duration(seconds: 3), () {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user == null) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/sign-up', (route) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, '/screen', (route) => false);
+      }
+      ;
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

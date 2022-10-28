@@ -20,16 +20,7 @@ class ScreenPage extends StatelessWidget {
       const ProfilePage()
     ];
 
-    // Timer.periodic(const Duration(seconds: 3), (timer) {
-    //   (appProvider.indexScreen < 1)
-    //       ? appProvider.indexScreen += 1
-    //       : timer.cancel();
-    // });
-
     return Scaffold(
-      // appBar: (appProvider.indexScreen == 0 || appProvider.indexScreen == 1)
-      //     ? null
-      //     : appBar(titleScreens[appProvider.halaman]),
       body: screens[appProvider.indexScreen],
       bottomNavigationBar: bottomBar(appProvider),
     );

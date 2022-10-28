@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:tixtix/pages/login.dart';
-import 'package:tixtix/pages/sign_up.dart';
-import 'package:tixtix/providers/ticket_provider.dart';
 import 'package:tixtix/shared/theme.dart';
 
 class TicketPage extends StatefulWidget {
@@ -17,16 +12,25 @@ class _TicketPageState extends State<TicketPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: kWhiteColor,
-            bottom: const TabBar(
+            bottom: TabBar(
+              indicatorColor: kPrimaryColor,
               tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
+                Tab(
+                    child: Text(
+                  'AKTIF',
+                  style: blackTextStyle.copyWith(letterSpacing: 2),
+                )),
+                Tab(
+                    child: Text(
+                  'SELESAI',
+                  style: blackTextStyle.copyWith(letterSpacing: 2),
+                )),
               ],
             ),
             title: const Text(
@@ -37,7 +41,6 @@ class _TicketPageState extends State<TicketPage> {
             children: [
               Icon(Icons.directions_car),
               Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
             ],
           ),
         ),

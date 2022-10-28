@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tixtix/consts/data.dart';
 import 'package:tixtix/pages/widgets/search_bar.dart';
@@ -14,49 +11,52 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          hideKeyboard(context);
-        },
-        child: SafeArea(
-            child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height,
-                child: CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      forceElevated: true,
-                      backgroundColor: Colors.white,
-                      iconTheme: const IconThemeData(color: Colors.black),
-                      title: const SearchBar(),
-                      actions: [
-                        IconButton(
-                            onPressed: () {},
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            constraints: const BoxConstraints(),
-                            icon: const Icon(Icons.account_circle_outlined)),
-                        IconButton(
-                            onPressed: () {},
-                            padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                            constraints: const BoxConstraints(),
-                            icon: const Icon(Icons.notifications))
-                      ],
-                    ),
-                    SliverToBoxAdapter(
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        height: MediaQuery.of(context).size.height / 6,
-                        child: const FilterWidget(),
+    return Scaffold(
+      body: GestureDetector(
+          onTap: () {
+            hideKeyboard(context);
+          },
+          child: SafeArea(
+              child: Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverAppBar(
+                        forceElevated: true,
+                        backgroundColor: Colors.white,
+                        iconTheme: const IconThemeData(color: Colors.black),
+                        title: const SearchBar(),
+                        actions: [
+                          IconButton(
+                              onPressed: () {},
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.account_circle_outlined)),
+                          IconButton(
+                              onPressed: () {},
+                              padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.notifications))
+                        ],
                       ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 1.2,
-                          width: double.infinity,
-                          child: const Carousel()),
-                    )
-                  ],
-                ))));
+                      SliverToBoxAdapter(
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          height: MediaQuery.of(context).size.height / 6,
+                          child: const FilterWidget(),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: SizedBox(
+                            height: MediaQuery.of(context).size.height / 1.2,
+                            width: double.infinity,
+                            child: const Carousel()),
+                      )
+                    ],
+                  )))),
+    );
   }
 }
 

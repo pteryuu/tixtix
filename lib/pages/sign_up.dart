@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import '../../shared/theme.dart';
+import '../cubit/auth_cubit.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -11,14 +12,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-  TextEditingController birthController = TextEditingController();
+  TextEditingController nameController = TextEditingController(text: '');
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passController = TextEditingController(text: '');
+  TextEditingController birthController = TextEditingController(text: '');
   @override
   Widget build(BuildContext context) {
-    // FirebaseFirestore firestore = FirebaseFirestore.instance;
-    // CollectionReference users = firestore.collection('users');
     Widget title() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -158,33 +157,47 @@ class _SignUpPageState extends State<SignUpPage> {
       }
 
       Widget submitButton() {
-        return Container(
-          width: double.infinity,
-          height: 55,
-          child: TextButton(
-            style: TextButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(defaultRadius))),
-            onPressed: () {
-              // users.add({
-              //   'name': nameController.text,
-              //   'email': emailController.text,
-              //   'password': passController.text,
-              //   'birth': birthController.text,
-              // });
-              nameController.text = '';
-              emailController.text = '';
-              passController.text = '';
-              birthController.text = '';
-
-              Navigator.pushNamed(context, '/screen');
-            },
-            child: Text(
-              'Get Started',
-              style: whiteTextStyle.copyWith(fontSize: 18, fontWeight: medium),
-            ),
-          ),
+        return BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthSuccess) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/screen', (route) => false);
+            } else if (state is AuthFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: kRedColor, content: Text(state.err)));
+            }
+          },
+          builder: (context, state) {
+            if (state is AuthLoad) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: kWhiteColor,
+                ),
+              );
+            }
+            return Container(
+              width: double.infinity,
+              height: 55,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                    backgroundColor: kPrimaryColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(defaultRadius))),
+                onPressed: () {
+                  context.read<AuthCubit>().signUp(
+                      name: nameController.text,
+                      email: emailController.text,
+                      password: passController.text,
+                      birth: birthController.text);
+                },
+                child: Text(
+                  'Get Started',
+                  style:
+                      whiteTextStyle.copyWith(fontSize: 18, fontWeight: medium),
+                ),
+              ),
+            );
+          },
         );
       }
 
