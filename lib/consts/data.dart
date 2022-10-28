@@ -26,3 +26,26 @@ Map<String, bool> categories = {
   'Upcoming': false,
   'Artist': false
 };
+
+List<Map<String, String>> eventList = [
+  {
+    'img': 'assets/poster-1.jpg',
+    'title': 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+  },
+  {
+    'img': 'assets/poster-2.jpg',
+    'title': 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+  },
+  {
+    'img': 'assets/poster-3.jpg',
+    'title': 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+  },
+  {
+    'img': 'assets/poster-4.jpg',
+    'title': 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+  },
+  {
+    'img': 'assets/poster-5.jpg',
+    'title': 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+  }
+];

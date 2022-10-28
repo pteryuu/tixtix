@@ -6,6 +6,8 @@ import 'package:tixtix/pages/ticket.dart';
 import 'package:tixtix/providers/bottom_nav.dart';
 import 'package:tixtix/shared/theme.dart';
 
+import 'events_list.dart';
+
 class ScreenPage extends StatelessWidget {
   const ScreenPage({Key? key}) : super(key: key);
 
@@ -17,7 +19,8 @@ class ScreenPage extends StatelessWidget {
     List<dynamic> screens = [
       const HomePage(),
       const TicketPage(),
-      const ProfilePage()
+      const ProfilePage(),
+      const EventList(),
     ];
 
     // Timer.periodic(const Duration(seconds: 3), (timer) {
@@ -48,6 +51,10 @@ BottomNavigationBar bottomBar(BottomNavProvider appProvider) {
     },
     {
       'icon': Icon(Icons.person_outline),
+      'label': 'Profil',
+    },
+    {
+      'icon': Icon(Icons.list_alt_outlined),
       'label': 'Profil',
     },
   ];
