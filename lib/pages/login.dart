@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Selamat datang',
+                  'Have an account?',
                   textAlign: TextAlign.left,
                   style:
                       blackTextStyle.copyWith(fontSize: 20, fontWeight: bold),

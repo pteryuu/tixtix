@@ -48,11 +48,7 @@ android {
         applicationId "com.alite.tixtix"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-<<<<<<< HEAD
-        minSdkVersion 30
-=======
         minSdkVersion 19
->>>>>>> 1bc4e14753df7eb880edd0bbc3caad69b1368f0c
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

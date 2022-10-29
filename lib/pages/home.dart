@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tixtix/consts/data.dart';
+import 'package:tixtix/pages/widgets/event_list_item.dart';
 import 'package:tixtix/pages/widgets/search_bar.dart';
 import 'package:tixtix/services/hide_keyboard.dart';
 
@@ -13,49 +14,56 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-          onTap: () {
-            hideKeyboard(context);
-          },
-          child: SafeArea(
-              child: Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height,
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverAppBar(
-                        forceElevated: true,
-                        backgroundColor: Colors.white,
-                        iconTheme: const IconThemeData(color: Colors.black),
-                        title: const SearchBar(),
-                        actions: [
-                          IconButton(
-                              onPressed: () {},
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              constraints: const BoxConstraints(),
-                              icon: const Icon(Icons.account_circle_outlined)),
-                          IconButton(
-                              onPressed: () {},
-                              padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                              constraints: const BoxConstraints(),
-                              icon: const Icon(Icons.notifications))
-                        ],
-                      ),
-                      SliverToBoxAdapter(
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          height: MediaQuery.of(context).size.height / 6,
-                          child: const FilterWidget(),
-                        ),
-                      ),
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                            height: MediaQuery.of(context).size.height / 1.2,
-                            width: double.infinity,
-                            child: const Carousel()),
-                      )
+        onTap: () {
+          hideKeyboard(context);
+        },
+        child: SafeArea(
+          child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              child: CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    forceElevated: true,
+                    backgroundColor: Colors.white,
+                    iconTheme: const IconThemeData(color: Colors.black),
+                    title: const SearchBar(),
+                    actions: [
+                      IconButton(
+                          onPressed: () {},
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          constraints: const BoxConstraints(),
+                          icon: const Icon(Icons.account_circle_outlined)),
+                      IconButton(
+                          onPressed: () {},
+                          padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+                          constraints: const BoxConstraints(),
+                          icon: const Icon(Icons.notifications))
                     ],
-                  )))),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      height: MediaQuery.of(context).size.height / 6,
+                      child: const FilterWidget(),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 1.2,
+                        width: double.infinity,
+                        child: const Carousel()),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 1.2,
+                        width: double.infinity,
+                        child: const EventList()),
+                  ),
+                ],
+              )),
+        ),
+      ),
     );
   }
 }
@@ -170,6 +178,29 @@ class _MyButtonState extends State<MyButton> {
               widget.onChangeState!(value);
             });
           }),
+    );
+  }
+}
+
+class EventList extends StatelessWidget {
+  const EventList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 1.2,
+      width: double.infinity,
+      // height: MediaQuery.of(context).size.height,
+      // width: double.infinity,
+      child: ListView.builder(
+        itemBuilder: (BuildContext context, int idx) {
+          return EventListItem(
+              first: idx == 0,
+              thumbnail: eventList[idx]['img']!,
+              title: eventList[idx]['title']!);
+        },
+        itemCount: eventList.length,
+      ),
     );
   }
 }

@@ -17,7 +17,7 @@ class ScreenPage extends StatelessWidget {
     List<dynamic> screens = [
       const HomePage(),
       const TicketPage(),
-      const ProfilePage()
+      const ProfilePage(),
     ];
 
     return Scaffold(
@@ -39,6 +39,10 @@ BottomNavigationBar bottomBar(BottomNavProvider appProvider) {
     },
     {
       'icon': Icon(Icons.person_outline),
+      'label': 'Profil',
+    },
+    {
+      'icon': Icon(Icons.list_alt_outlined),
       'label': 'Profil',
     },
   ];
