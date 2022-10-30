@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tixtix/cubit/auth_cubit.dart';
+import 'package:tixtix/services/auth_service.dart';
 import 'package:tixtix/shared/theme.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -28,12 +29,36 @@ class ProfilePage extends StatelessWidget {
           );
         }
         return Scaffold(
-          appBar: AppBar(title: Text('Profile')),
-          body: TextButton(
-            child: Text('Sign out'),
-            onPressed: () {
-              context.read<AuthCubit>().signOut();
-            },
+          appBar: AppBar(
+            backgroundColor: kWhiteColor,
+            title: Text(
+              'TIXTIX',
+              style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+          ),
+          body: Column(
+            children: [
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthSuccess) {
+                    return Text(
+                      'Welcome back \n${state.user.name}',
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                    );
+                  } else {
+                    return Text('');
+                  }
+                },
+              ),
+              ElevatedButton(
+                child: Text('Sign out'),
+                onPressed: () {
+                  context.read<AuthCubit>().signOut();
+                },
+              ),
+            ],
           ),
         );
       },
