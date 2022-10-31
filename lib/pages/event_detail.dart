@@ -22,77 +22,203 @@ class EventDetail extends StatelessWidget {
           automaticallyImplyLeading: true,
           backgroundColor: Colors.white,
         ),
-        body: SizedBox(
+        body: Container(
+          padding: const EdgeInsets.all(16),
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                    child: Image.asset(data['img'],
-                        fit: BoxFit.fitWidth, width: 800.0),
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 4,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 0)
+                    )
+                  ]
                 ),
-                const SizedBox(
-                  height: 16,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                  child: Image.asset(data['img'],
+                      fit: BoxFit.fitWidth, width: MediaQuery.of(context).size.width,),
                 ),
-                Text(
-                  "Start from IDR ${oCcy.format(data['harga'])}",
-                  style: TextStyle(color: kGreyColor, fontSize: 12),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  "${data['title']}",
-                  style: TextStyle(
-                      color: kBlackColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24),
-                ),
-                const Divider(
-                  thickness: 2,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                "Start from IDR ${oCcy.format(data['harga'])}",
+                style: TextStyle(color: kGreyColor, fontSize: 13),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                "${data['title']}",
+                style: TextStyle(
+                    color: kBlackColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24),
+              ),
+              const Divider(
+                thickness: 2,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text('Tanggal')],
-                        ),
-                        Text('test')
+                      children: const [
+                        Text('Tanggal'),
+                        SizedBox(height: 8,),
+                        CustomBox(label: '09 Nov, 2020', icon: Icons.calendar_month)
                       ],
                     ),
-                    const Text('|'),
-                    Column(
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text('Waktu')],
-                        ),
-                        Text('test')
+                      children: const [
+                        Text('Waktu'),
+                        SizedBox(height: 8,),
+                        CustomBox(label: '09:00 AM', icon: Icons.timer)
                       ],
                     )
-                  ],
-                )
-              ],
-            ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 16,),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(data['desc'],
+                        style: const TextStyle(
+                          fontSize: 16,
+                          height: 1.5,
+                        )
+                      ),
+                      const SizedBox(height: 16,),
+                      const Text('Line Up',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                        )
+                      ),
+                      const SizedBox(height: 8,),
+                      AvatarGroup(),
+                    ],
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        primary: Colors.orange
+                      ),
+                      child: const Text('PESAN TIKET',
+                        style: TextStyle(
+                          fontSize: 20,
+                          letterSpacing: 1
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class CustomBox extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  const CustomBox({Key? key, required this.label, required this.icon}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            spreadRadius: 2,
+            offset: const Offset(0, 0)
+          )
+        ]
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label),
+          Icon(icon)
+        ],
+      ),
+    );
+  }
+}
+
+class AvatarGroup extends StatelessWidget {
+  final List<String> imageList = [
+    'assets/empty_user.png',
+    'assets/empty_user.png',
+    'assets/empty_user.png'
+  ];
+  AvatarGroup({Key? key}): super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      // width: MediaQuery.of(context).size.width - 16,
+      child: Stack(
+        children: List.generate(
+          imageList.length, (index) {
+            return Positioned(
+              left: index * 30,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 3.0
+                  )
+                ),
+                child: CircleAvatar(
+                  backgroundImage: Image.asset(imageList[index]).image,
+                  radius: 20,
+                ),
+              )
+            );
+          }
+        )
+      )
     );
   }
 }
