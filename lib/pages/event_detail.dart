@@ -53,14 +53,14 @@ class EventDetail extends StatelessWidget {
               ),
               Text(
                 "Start from IDR ${oCcy.format(data['harga'])}",
-                style: TextStyle(color: kGreyColor, fontSize: 13),
+                style: blackTextStyle.copyWith(color: kGreyColor, fontSize: 12),
               ),
               const SizedBox(
                 height: 8,
               ),
               Text(
                 "${data['title']}",
-                style: TextStyle(
+                style: blackTextStyle.copyWith(
                     color: kBlackColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 24),
@@ -79,10 +79,10 @@ class EventDetail extends StatelessWidget {
                     flex: 1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('Tanggal'),
-                        SizedBox(height: 8,),
-                        CustomBox(label: '09 Nov, 2020', icon: Icons.calendar_month)
+                      children: [
+                        Text('Tanggal', style: blackTextStyle,),
+                        const SizedBox(height: 8,),
+                        const CustomBox(label: '09 Nov, 2020', icon: Icons.calendar_month)
                       ],
                     ),
                   ),
@@ -91,10 +91,10 @@ class EventDetail extends StatelessWidget {
                     flex: 1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text('Waktu'),
-                        SizedBox(height: 8,),
-                        CustomBox(label: '09:00 AM', icon: Icons.timer)
+                      children: [
+                        Text('Waktu', style: blackTextStyle),
+                        const SizedBox(height: 8,),
+                        const CustomBox(label: '09:00 AM', icon: Icons.timer)
                       ],
                     )
                   )
@@ -107,8 +107,8 @@ class EventDetail extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(data['desc'],
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: blackTextStyle.copyWith(
+                          fontSize: 14,
                           height: 1.5,
                         )
                       ),
@@ -134,8 +134,8 @@ class EventDetail extends StatelessWidget {
                         shape: const StadiumBorder(),
                         primary: Colors.orange
                       ),
-                      child: const Text('PESAN TIKET',
-                        style: TextStyle(
+                      child: Text('PESAN TIKET',
+                        style: whiteTextStyle.copyWith(
                           fontSize: 20,
                           letterSpacing: 1
                         ),
@@ -176,7 +176,7 @@ class CustomBox extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label),
+          Text(label, style: blackTextStyle),
           Icon(icon)
         ],
       ),

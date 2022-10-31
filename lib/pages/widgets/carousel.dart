@@ -12,6 +12,14 @@ final imageSliders = data.asMap().entries.map((entry) {
             margin: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 0)
+                )
+                ],
                 border: Border.all(
                     color: const Color.fromARGB(100, 0, 0, 0), width: 0.5)),
             child: ClipRRect(
