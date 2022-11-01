@@ -19,7 +19,7 @@ class ScreenPage extends StatelessWidget {
     List<dynamic> screens = [
       const HomePage(),
       const TicketPage(),
-      const ProfilePage(),
+      ProfilePage(),
       const EventList(),
     ];
 

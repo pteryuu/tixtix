@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tixtix/consts/data.dart';
+import 'package:tixtix/pages/profile.dart';
 import 'package:tixtix/pages/widgets/search_bar.dart';
 import 'package:tixtix/services/hide_keyboard.dart';
 
@@ -19,7 +20,7 @@ class HomePage extends StatelessWidget {
           hideKeyboard(context);
         },
         child: SafeArea(
-            child: Container(
+            child: SizedBox(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height,
                 child: CustomScrollView(
@@ -33,7 +34,10 @@ class HomePage extends StatelessWidget {
                       title: const SearchBar(),
                       actions: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => ProfilePage()));
+                            },
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             constraints: const BoxConstraints(),
                             icon: const Icon(Icons.account_circle_outlined)),
