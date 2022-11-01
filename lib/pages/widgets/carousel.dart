@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tixtix/consts/data.dart';
+import 'package:tixtix/pages/event_detail.dart';
 
 final imageSliders = data.asMap().entries.map((entry) {
   return Builder(
@@ -11,15 +12,25 @@ final imageSliders = data.asMap().entries.map((entry) {
             margin: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 0)
+                )
+                ],
                 border: Border.all(
                     color: const Color.fromARGB(100, 0, 0, 0), width: 0.5)),
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(8.0)),
               child: GestureDetector(
                 onTapUp: (details) {
-                  // Navigator.push(context,
-                  //   MaterialPageRoute(builder: (context) => DetailPage(movie: entry.value, index: entry.key,))
-                  // );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EventDetail(data: entry.value)));
                 },
                 child: Image.asset(entry.value['img'],
                     fit: BoxFit.fill, width: 800.0),
