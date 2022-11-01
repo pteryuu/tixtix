@@ -6,13 +6,20 @@ class EventListItem extends StatelessWidget {
   final String title;
   final String thumbnail;
   bool first;
-  EventListItem({Key? key, required this.thumbnail, required this.title, this.first = false}): super(key: key);
+  EventListItem(
+      {Key? key,
+      required this.thumbnail,
+      required this.title,
+      this.first = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: first ? 16 : 8,),
+        SizedBox(
+          height: first ? 16 : 8,
+        ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           height: 100,
@@ -25,12 +32,12 @@ class EventListItem extends StatelessWidget {
                 flex: 1,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                  child: Image.asset(thumbnail,
-                    fit: BoxFit.cover
-                  ),
+                  child: Image.asset(thumbnail, fit: BoxFit.cover),
                 ),
               ),
-              const SizedBox(width: 12,),
+              const SizedBox(
+                width: 12,
+              ),
               Expanded(
                 flex: 2,
                 child: Column(
@@ -43,7 +50,8 @@ class EventListItem extends StatelessWidget {
                       children: [
                         Expanded(
                           flex: 4,
-                          child: Text(title,
+                          child: Text(
+                            title,
                             maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -57,17 +65,13 @@ class EventListItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('something',
-                          style: TextStyle(
-                            color: kGreyColor,
-                            fontSize: 11
-                          ),  
+                        Text(
+                          'something',
+                          style: TextStyle(color: kGreyColor, fontSize: 11),
                         ),
-                        Text('here',
-                          style: TextStyle(
-                            color: kGreyColor,
-                            fontSize: 11
-                          ),  
+                        Text(
+                          'here',
+                          style: TextStyle(color: kGreyColor, fontSize: 11),
                         )
                       ],
                     )
@@ -77,7 +81,9 @@ class EventListItem extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 4,),
+        const SizedBox(
+          height: 4,
+        ),
         const Divider()
       ],
     );
@@ -92,15 +98,12 @@ class Tags extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: kGreyColor),
-        borderRadius: BorderRadius.circular(2.0)
-      ),
-      child: Text(label,
+          border: Border.all(color: kGreyColor),
+          borderRadius: BorderRadius.circular(2.0)),
+      child: Text(
+        label,
         textAlign: TextAlign.center,
-        style: TextStyle(
-          color: kGreyColor,
-          fontSize: 10
-        ),
+        style: TextStyle(color: kGreyColor, fontSize: 10),
       ),
     );
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tixtix/cubit/auth_cubit.dart';
+import 'package:tixtix/services/auth_service.dart';
 import 'package:tixtix/shared/theme.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -14,145 +17,168 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          elevation: 1.0,
-          iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          backgroundColor: Colors.white,
-          title: Text('Akun Saya',
-            style: TextStyle(
-              color: kBlackColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 20
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthSuccess) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/screen', (route) => false);
+        } else if (state is AuthFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(backgroundColor: kRedColor, content: Text(state.err)));
+        } else if (state is AuthInitial) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/sign-up', (route) => false);
+        }
+      },
+      builder: (context, state) {
+        if (state is AuthLoad) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: true,
+            elevation: 1.0,
+            iconTheme: const IconThemeData(
+              color: Colors.black, //change your color here
+            ),
+            backgroundColor: Colors.white,
+            title: Text('Akun Saya',
+              style: TextStyle(
+                color: kBlackColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 20
+              ),
             ),
           ),
-        ),
-        body: SizedBox(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      height: 140,
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(26, 44, 80, 1)
+          body: SizedBox(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        height: 140,
+                        decoration: const BoxDecoration(
+                          color: Color.fromRGBO(26, 44, 80, 1)
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(28),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Pieter Yu',
-                                      style: TextStyle(
-                                        color: kWhiteColor,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold
-                                      )
-                                    ),
-                                    const SizedBox(height: 8,),
-                                    Text('+62 85158486659',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: kWhiteColor,
+                      Padding(
+                        padding: const EdgeInsets.all(28),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Pieter Yu',
+                                        style: TextStyle(
+                                          color: kWhiteColor,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold
+                                        )
                                       ),
-                                    )
-                                  ],
+                                      const SizedBox(height: 8,),
+                                      Text('+62 85158486659',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: kWhiteColor,
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      onPressed: (){},
-                                      color: kWhiteColor,
-                                      constraints: const BoxConstraints(),
-                                      iconSize: 28,
-                                      padding: EdgeInsets.zero,
-                                      icon: const Icon(Icons.settings),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: const [
-                              Expanded(
-                                child: ActivatePremiumTix(),
-                              )
-                          ],)
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                MenuItem(
-                  onTap: (){
-                  },
-                  leading: const Text('Akun',
-                    style: TextStyle(
-                      fontSize: 16
-                    ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        onPressed: (){},
+                                        color: kWhiteColor,
+                                        constraints: const BoxConstraints(),
+                                        iconSize: 28,
+                                        padding: EdgeInsets.zero,
+                                        icon: const Icon(Icons.settings),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: const [
+                                Expanded(
+                                  child: ActivatePremiumTix(),
+                                )
+                            ],)
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                const SizedBox(height: 18,),
-                ...menuList.map((e) => 
                   MenuItem(
-                    onTap: (){},
-                    leading: Text(e,
-                      style: const TextStyle(
+                    onTap: (){
+                    },
+                    leading: const Text('Akun',
+                      style: TextStyle(
                         fontSize: 16
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 18,),
+                  ...menuList.map((e) => 
+                    MenuItem(
+                      onTap: (){},
+                      leading: Text(e,
+                        style: const TextStyle(
+                          fontSize: 16
+                        ),
+                      ),
+                    )
+                  ),
+                  MenuItem(
+                    onTap: (){},
+                    leading: const Text('Versi App',
+                      style: TextStyle(
+                        fontSize: 16
+                      ),
+                    ),
+                    ending: const Text('1.27.0',
+                      style: TextStyle(
+                        fontSize: 16
+                      ),
+                    ),
+                  ),
+                  MenuItem(
+                    onTap: (){
+                      context.read<AuthCubit>().signOut();
+                    },
+                    leading: Text('Keluar',
+                      style: TextStyle(
+                        color: kRedColor,
+                        fontSize: 16
+                      ),
+                    ),
+                    ending: const SizedBox()
                   )
-                ),
-                MenuItem(
-                  onTap: (){},
-                  leading: const Text('Versi App',
-                    style: TextStyle(
-                      fontSize: 16
-                    ),
-                  ),
-                  ending: const Text('1.27.0',
-                    style: TextStyle(
-                      fontSize: 16
-                    ),
-                  ),
-                ),
-                MenuItem(
-                  onTap: (){},
-                  leading: Text('Keluar',
-                    style: TextStyle(
-                      color: kRedColor,
-                      fontSize: 16
-                    ),
-                  ),
-                  ending: const SizedBox()
-                )
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
+      },
+    );
   }
 }
 

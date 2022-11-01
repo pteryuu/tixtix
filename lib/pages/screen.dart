@@ -6,8 +6,6 @@ import 'package:tixtix/pages/ticket.dart';
 import 'package:tixtix/providers/bottom_nav.dart';
 import 'package:tixtix/shared/theme.dart';
 
-import 'events_list.dart';
-
 class ScreenPage extends StatelessWidget {
   const ScreenPage({Key? key}) : super(key: key);
 
@@ -23,16 +21,7 @@ class ScreenPage extends StatelessWidget {
       const EventList(),
     ];
 
-    // Timer.periodic(const Duration(seconds: 3), (timer) {
-    //   (appProvider.indexScreen < 1)
-    //       ? appProvider.indexScreen += 1
-    //       : timer.cancel();
-    // });
-
     return Scaffold(
-      // appBar: (appProvider.indexScreen == 0 || appProvider.indexScreen == 1)
-      //     ? null
-      //     : appBar(titleScreens[appProvider.halaman]),
       body: screens[appProvider.indexScreen],
       bottomNavigationBar: bottomBar(appProvider),
     );

@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tixtix/consts/data.dart';
 import 'package:tixtix/pages/profile.dart';
@@ -15,7 +12,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Scaffold(
+      body: GestureDetector(
         onTap: () {
           hideKeyboard(context);
         },
@@ -54,15 +52,26 @@ class HomePage extends StatelessWidget {
                         height: MediaQuery.of(context).size.height / 6,
                         child: const FilterWidget(),
                       ),
+
                     ),
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 1.2,
-                          width: double.infinity,
-                          child: const Carousel()),
-                    )
-                  ],
-                ))));
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 1.2,
+                        width: double.infinity,
+                        child: const Carousel()),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 1.2,
+                        width: double.infinity,
+                        child: const EventList()),
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
   }
 }
 
@@ -176,6 +185,29 @@ class _MyButtonState extends State<MyButton> {
               widget.onChangeState!(value);
             });
           }),
+    );
+  }
+}
+
+class EventList extends StatelessWidget {
+  const EventList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 1.2,
+      width: double.infinity,
+      // height: MediaQuery.of(context).size.height,
+      // width: double.infinity,
+      child: ListView.builder(
+        itemBuilder: (BuildContext context, int idx) {
+          return EventListItem(
+              first: idx == 0,
+              thumbnail: eventList[idx]['img']!,
+              title: eventList[idx]['title']!);
+        },
+        itemCount: eventList.length,
+      ),
     );
   }
 }

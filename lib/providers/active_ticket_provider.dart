@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+
 const List<String> activeTicketCategories = ['Dalam Negeri', 'Luar Negeri'];
+
 class ActiveTicketProvider extends ChangeNotifier {
   //Choice chip
 

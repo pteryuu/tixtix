@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:tixtix/pages/get_started.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../shared/theme.dart';
 
@@ -15,12 +15,17 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     // TODO: implement initState
     Timer(Duration(seconds: 3), () {
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => GetStartedPage()));
+      User? user = FirebaseAuth.instance.currentUser;
 
-      //Cara gampang menggunakan routes
-      Navigator.pushNamed(context, '/get-started');
+      if (user == null) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/sign-up', (route) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      }
+      ;
     });
+
     super.initState();
   }
 
