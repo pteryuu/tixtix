@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tixtix/consts/data.dart';
-import 'package:tixtix/pages/widgets/event_list_item.dart';
+import 'package:tixtix/pages/profile.dart';
 import 'package:tixtix/pages/widgets/search_bar.dart';
 import 'package:tixtix/services/hide_keyboard.dart';
 
@@ -18,34 +18,41 @@ class HomePage extends StatelessWidget {
           hideKeyboard(context);
         },
         child: SafeArea(
-          child: Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              child: CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    forceElevated: true,
-                    backgroundColor: Colors.white,
-                    iconTheme: const IconThemeData(color: Colors.black),
-                    title: const SearchBar(),
-                    actions: [
-                      IconButton(
-                          onPressed: () {},
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          constraints: const BoxConstraints(),
-                          icon: const Icon(Icons.account_circle_outlined)),
-                      IconButton(
-                          onPressed: () {},
-                          padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                          constraints: const BoxConstraints(),
-                          icon: const Icon(Icons.notifications))
-                    ],
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      height: MediaQuery.of(context).size.height / 6,
-                      child: const FilterWidget(),
+            child: SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                child: CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      pinned: true,
+                      forceElevated: true,
+                      elevation: 1.0,
+                      backgroundColor: Colors.white,
+                      iconTheme: const IconThemeData(color: Colors.black),
+                      title: const SearchBar(),
+                      actions: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => ProfilePage()));
+                            },
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            constraints: const BoxConstraints(),
+                            icon: const Icon(Icons.account_circle_outlined)),
+                        IconButton(
+                            onPressed: () {},
+                            padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+                            constraints: const BoxConstraints(),
+                            icon: const Icon(Icons.notifications))
+                      ],
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        height: MediaQuery.of(context).size.height / 6,
+                        child: const FilterWidget(),
+                      ),
+
                     ),
                   ),
                   SliverToBoxAdapter(
