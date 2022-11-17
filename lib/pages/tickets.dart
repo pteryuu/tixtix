@@ -85,6 +85,7 @@ class _TicketPageState extends State<TicketPage> {
                   const SizedBox(height: 8,),
                   Expanded(
                     child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: tickets.map((e) {
                           return Ticket(

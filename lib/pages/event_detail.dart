@@ -83,7 +83,10 @@ class EventDetail extends StatelessWidget {
                     children: [
                       Text('Tanggal', style: blackTextStyle,),
                       const SizedBox(height: 8,),
-                      const CustomBox(label: '09 Nov, 2020', icon: Icons.calendar_month)
+                      CustomBox(
+                        label: DateFormat('dd MMM, y').format(DateTime.parse(data['tanggal'])), 
+                        icon: Icons.calendar_month
+                      )
                     ],
                   ),
                 ),
