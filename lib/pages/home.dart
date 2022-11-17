@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tixtix/consts/data.dart';
 import 'package:tixtix/pages/profile.dart';
+import 'package:tixtix/pages/widgets/event_list_item.dart';
 import 'package:tixtix/pages/widgets/search_bar.dart';
 import 'package:tixtix/services/hide_keyboard.dart';
 
@@ -22,6 +23,7 @@ class HomePage extends StatelessWidget {
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height,
                 child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
                   slivers: [
                     SliverAppBar(
                       pinned: true,
@@ -54,19 +56,33 @@ class HomePage extends StatelessWidget {
                       ),
 
                     ),
+                  const SliverToBoxAdapter(
+                    child: Carousel(),
                   ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                        height: MediaQuery.of(context).size.height / 1.2,
-                        width: double.infinity,
-                        child: const Carousel()),
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Text(
+                        'Events',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                    ),
                   ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                        height: MediaQuery.of(context).size.height / 1.2,
-                        width: double.infinity,
-                        child: const EventList()),
-                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int idx) {
+                        return EventListItem(
+                            first: idx == 0,
+                            eventItem: data[idx]
+                        );
+                      },
+                      childCount: data.length
+                    ),
+                  )
                 ],
               )),
         ),
@@ -185,29 +201,6 @@ class _MyButtonState extends State<MyButton> {
               widget.onChangeState!(value);
             });
           }),
-    );
-  }
-}
-
-class EventList extends StatelessWidget {
-  const EventList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.2,
-      width: double.infinity,
-      // height: MediaQuery.of(context).size.height,
-      // width: double.infinity,
-      child: ListView.builder(
-        itemBuilder: (BuildContext context, int idx) {
-          return EventListItem(
-              first: idx == 0,
-              thumbnail: eventList[idx]['img']!,
-              title: eventList[idx]['title']!);
-        },
-        itemCount: eventList.length,
-      ),
     );
   }
 }

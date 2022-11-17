@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           '/terms': (context) => TCPage(),
           '/home': (context) => HomePage()
         },
-        home: GetStartedPage(),
+        home: ScreenPage(),
       ),
     );
   }
