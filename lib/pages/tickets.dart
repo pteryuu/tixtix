@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tixtix/pages/widgets/ticket.dart';
 import 'package:tixtix/providers/active_ticket_provider.dart';
 import 'package:tixtix/shared/theme.dart';
+
+import '../consts/data.dart';
 
 class TicketPage extends StatefulWidget {
   const TicketPage({super.key});
@@ -77,7 +80,27 @@ class _TicketPageState extends State<TicketPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
-                children: const [TicketCategories()],
+                children: [
+                  const TicketCategories(),
+                  const SizedBox(height: 8,),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: tickets.map((e) {
+                          return Ticket(
+                            kode: e['kode']!,
+                            title: e['title']!,
+                            date: e['date']!,
+                            startTime: e['startTime']!,
+                            endTime: e['endTime']!,
+                            location: e['location']!
+                          );
+                        }).toList()
+                      )
+                    ),
+                  )
+                ],
               ),
               const Icon(Icons.directions_transit),
               // Icon(Icons.directions_bike),

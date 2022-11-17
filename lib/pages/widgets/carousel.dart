@@ -38,7 +38,7 @@ final imageSliders = data.asMap().entries.map((entry) {
             ),
           ),
           const SizedBox(
-            height: 12,
+            height: 8,
           ),
           Text(
             entry.value['title'],
@@ -73,11 +73,11 @@ class _Carousel extends State<Carousel> {
               options: CarouselOptions(
                 autoPlay: true,
                 autoPlayInterval: const Duration(seconds: 8),
-                viewportFraction: 0.8,
+                viewportFraction: 0.713,
                 enableInfiniteScroll: true,
                 // enlargeCenterPage: true,
                 scrollPhysics: const RangeMaintainingScrollPhysics(),
-                aspectRatio: 0.5625,
+                aspectRatio: 0.95,
                 pageSnapping: false,
               ),
             ),
