@@ -12,34 +12,9 @@ class GetStartedPage extends StatefulWidget {
 }
 
 class _GetStartedPageState extends State<GetStartedPage> {
-  void initState() {
-    // TODO: implement initState
-    Timer(Duration(seconds: 3), () {
-      User? user = FirebaseAuth.instance.currentUser;
-
-      if (user == null) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/sign-up', (route) => false);
-      } else {
-        Navigator.pushNamedAndRemoveUntil(context, '/screen', (route) => false);
-      }
-      ;
-    });
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: [
-        // Container(
-        //   width: double.infinity,
-        //   height: double.infinity,
-        //   decoration: BoxDecoration(
-        //       image: DecorationImage(
-        //           image: AssetImage('assets/image_get_started.png'))),
-        // ),
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -57,23 +32,51 @@ class _GetStartedPageState extends State<GetStartedPage> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 50, bottom: 80),
-                width: 220,
-                height: 55,
-                child: TextButton(
-                  child: Text(
-                    'Get Started',
-                    style: whiteTextStyle.copyWith(
-                        fontSize: 18, fontWeight: medium),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SizedBox(
+                  height: 50,
+                  width: 200,
+                  child: ElevatedButton(
+                    child: StreamBuilder<bool>(
+                        initialData: true,
+                        stream: _longOperation(),
+                        builder: (context, snapshot) {
+                          final isLoading = snapshot?.data ?? true;
+                          return Stack(
+                            children: <Widget>[
+                              isLoading
+                                  ? Visibility(
+                                      visible: isLoading,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: kWhiteColor,
+                                        ),
+                                      ))
+                                  : Text(
+                                      'Get Started',
+                                      style: whiteTextStyle.copyWith(
+                                          fontSize: 18, fontWeight: medium),
+                                    ),
+
+                              // ),
+                            ],
+                          );
+                        }),
+                    onPressed: () {
+                      Future.delayed(
+                        Duration(
+                          seconds: 3,
+                        ),
+                      );
+                      Navigator.pushNamed(context, '/sign-up');
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: kPrimaryColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(defaultRadius))),
                   ),
-                  style: TextButton.styleFrom(
-                      backgroundColor: kPrimaryColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(defaultRadius))),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/sign-up');
-                  },
                 ),
               )
             ],
@@ -82,4 +85,16 @@ class _GetStartedPageState extends State<GetStartedPage> {
       ]),
     );
   }
+}
+
+@override
+Stream<bool> _longOperation() async* {
+  yield true;
+  //do some long operation instead of wait
+  await Future.delayed(
+    Duration(
+      seconds: 3,
+    ),
+  );
+  yield false;
 }

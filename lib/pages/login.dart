@@ -1,5 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tixtix/cubit/auth_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tixtix/cubit/auth_cubit.dart';
+import '../../shared/theme.dart';
+
 import 'package:tixtix/shared/theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,6 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Widget emailInput() {
@@ -57,6 +66,48 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
 
+    Widget submitButton() {
+      return BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/screen', (route) => false);
+          } else if (state is AuthFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(backgroundColor: kRedColor, content: Text(state.err)));
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthLoad) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: kWhiteColor,
+              ),
+            );
+          }
+          return Container(
+            width: double.infinity,
+            height: 55,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                  backgroundColor: kPrimaryColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(defaultRadius))),
+              onPressed: () {
+                context.read<AuthCubit>().login(
+                    email: emailController.text, password: passController.text);
+              },
+              child: Text(
+                'Get Started',
+                style:
+                    whiteTextStyle.copyWith(fontSize: 18, fontWeight: medium),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15),
@@ -85,27 +136,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             emailInput(),
             passwordInput(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: kPrimaryColor,
-                minimumSize: const Size.fromHeight(50), // NEW
-              ),
-              child: Text(
-                'Masuk',
-                style: whiteTextStyle,
-              ),
-              onPressed: () {
-                // Navigator.of(context).push(MaterialPageRoute(
-                //   builder: (context) => MyScreen(
-                //     gender: '',
-                //     email: sProv.getValueEmail,
-                //     password: sProv.getValuePassword,
-                //     name: sProv.getValueEmail,
-                //     number: '',
-                //   ),
-                // ));
-              },
-            ),
+            submitButton(),
             Container(
               padding: const EdgeInsets.only(top: 10),
               child: Row(

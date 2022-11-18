@@ -18,7 +18,6 @@ class ScreenPage extends StatelessWidget {
       const HomePage(),
       const TicketPage(),
       ProfilePage(),
-      const EventList(),
     ];
 
     return Scaffold(
@@ -40,10 +39,6 @@ BottomNavigationBar bottomBar(BottomNavProvider appProvider) {
     },
     {
       'icon': Icon(Icons.person_outline),
-      'label': 'Profil',
-    },
-    {
-      'icon': Icon(Icons.list_alt_outlined),
       'label': 'Profil',
     },
   ];

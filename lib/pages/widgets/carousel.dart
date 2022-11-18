@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:tixtix/consts/data.dart';
 import 'package:tixtix/pages/event_detail.dart';
+import 'package:tixtix/services/json_service.dart';
 
 final imageSliders = data.asMap().entries.map((entry) {
   return Builder(
@@ -14,11 +15,10 @@ final imageSliders = data.asMap().entries.map((entry) {
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    spreadRadius: 2,
-                    offset: const Offset(0, 0)
-                )
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 0))
                 ],
                 border: Border.all(
                     color: const Color.fromARGB(100, 0, 0, 0), width: 0.5)),
