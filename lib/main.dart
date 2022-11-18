@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           '/home': (context) => HomePage(),
           // '/account': (context) => AccountPage()
         },
-        home: GetStartedPage(),
+        home: ScreenPage(),
       ),
     );
   }

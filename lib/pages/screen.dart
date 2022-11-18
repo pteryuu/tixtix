@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tixtix/pages/home.dart';
 import 'package:tixtix/pages/profile.dart';
-import 'package:tixtix/pages/ticket.dart';
+import 'package:tixtix/pages/tickets.dart';
 import 'package:tixtix/providers/bottom_nav.dart';
 import 'package:tixtix/shared/theme.dart';
 

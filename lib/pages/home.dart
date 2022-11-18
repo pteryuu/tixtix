@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
           hideKeyboard(context);
         },
         child: SafeArea(
+<<<<<<< HEAD
           child: SizedBox(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
@@ -72,6 +73,74 @@ class _HomePageState extends State<HomePage> {
                       child: const EventList()),
                 ),
               ])),
+=======
+            child: SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    SliverAppBar(
+                      pinned: true,
+                      forceElevated: true,
+                      elevation: 1.0,
+                      backgroundColor: Colors.white,
+                      iconTheme: const IconThemeData(color: Colors.black),
+                      title: const SearchBar(),
+                      actions: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => ProfilePage()));
+                            },
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            constraints: const BoxConstraints(),
+                            icon: const Icon(Icons.account_circle_outlined)),
+                        IconButton(
+                            onPressed: () {},
+                            padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+                            constraints: const BoxConstraints(),
+                            icon: const Icon(Icons.notifications))
+                      ],
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        height: MediaQuery.of(context).size.height / 6,
+                        child: const FilterWidget(),
+                      ),
+
+                    ),
+                  const SliverToBoxAdapter(
+                    child: Carousel(),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Text(
+                        'Events',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int idx) {
+                        return EventListItem(
+                            first: idx == 0,
+                            eventItem: data[idx]
+                        );
+                      },
+                      childCount: data.length
+                    ),
+                  )
+                ],
+              )),
+>>>>>>> d1bd9f3b7b1904c6b2b14446143caead062d37b0
         ),
       ),
     );
@@ -187,6 +256,7 @@ class _MyButtonState extends State<MyButton> {
           }),
     );
   }
+<<<<<<< HEAD
 }
 
 class EventList extends StatelessWidget {
@@ -209,3 +279,6 @@ class EventList extends StatelessWidget {
     );
   }
 }
+=======
+}
+>>>>>>> d1bd9f3b7b1904c6b2b14446143caead062d37b0

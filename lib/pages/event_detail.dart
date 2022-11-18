@@ -91,6 +91,7 @@ class EventDetail extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+<<<<<<< HEAD
                       Text(
                         'Tanggal',
                         style: blackTextStyle,
@@ -100,6 +101,14 @@ class EventDetail extends StatelessWidget {
                       ),
                       const CustomBox(
                           label: '09 Nov, 2020', icon: Icons.calendar_month)
+=======
+                      Text('Tanggal', style: blackTextStyle,),
+                      const SizedBox(height: 8,),
+                      CustomBox(
+                        label: DateFormat('dd MMM, y').format(DateTime.parse(data['tanggal'])), 
+                        icon: Icons.calendar_month
+                      )
+>>>>>>> d1bd9f3b7b1904c6b2b14446143caead062d37b0
                     ],
                   ),
                 ),
