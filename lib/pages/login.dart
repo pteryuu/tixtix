@@ -30,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 6,
           ),
           TextFormField(
+            controller: emailController,
             cursorColor: kBlackColor,
             decoration: InputDecoration(
                 hintText: 'Your email address',
@@ -52,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 6,
           ),
           TextFormField(
+            controller: passController,
             obscureText: true,
             cursorColor: kBlackColor,
             decoration: InputDecoration(
