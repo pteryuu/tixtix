@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:tixtix/cubit/concert_cubit.dart';
 import 'package:tixtix/pages/account.dart';
 import 'package:tixtix/pages/get_started.dart';
 import 'package:tixtix/pages/login.dart';
@@ -31,8 +32,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => ConcertCubit())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
@@ -43,7 +47,6 @@ class MyApp extends StatelessWidget {
           '/screen': (context) => const ScreenPage(),
           '/terms': (context) => TCPage(),
           '/home': (context) => HomePage(),
-          // '/account': (context) => AccountPage()
         },
         home: ScreenPage(),
       ),
