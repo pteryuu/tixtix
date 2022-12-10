@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image/flutter_image.dart';
 import 'package:intl/intl.dart';
+import 'package:tixtix/models/concerts_model.dart';
 import 'package:tixtix/services/json_service.dart';
 import 'package:tixtix/shared/theme.dart';
 
 class EventDetail extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final ConcertModel data;
   EventDetail({Key? key, required this.data}) : super(key: key);
 
   final oCcy = NumberFormat("#,##0", "in_ID");
@@ -14,13 +16,8 @@ class EventDetail extends StatelessWidget {
   late JsonService helper;
 
   @override
-  void initState() {
-    helper = JsonService();
-    result = '';
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         elevation: 1.0,
@@ -52,10 +49,14 @@ class EventDetail extends StatelessWidget {
               ]),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                child: Image.asset(
-                  data['img'],
-                  fit: BoxFit.fitWidth,
-                  width: MediaQuery.of(context).size.width,
+                child: SizedBox(
+                  height: size.height,
+                  width: size.width,
+                  child: Image(
+                    image: NetworkImageWithRetry(data.imageUrl.toString()),
+                    fit: BoxFit.fitWidth,
+                    width: MediaQuery.of(context).size.width,
+                  ),
                 ),
               ),
             ),
@@ -63,14 +64,14 @@ class EventDetail extends StatelessWidget {
               height: 16,
             ),
             Text(
-              "Start from IDR ${oCcy.format(data['harga'])}",
+              "Start from IDR ${oCcy.format(data.price)}",
               style: blackTextStyle.copyWith(color: kGreyColor, fontSize: 12),
             ),
             const SizedBox(
               height: 8,
             ),
             Text(
-              "${data['title']}",
+              "${data.name}",
               style: blackTextStyle.copyWith(
                   color: kBlackColor,
                   fontWeight: FontWeight.bold,
@@ -126,7 +127,7 @@ class EventDetail extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(data['desc'],
+                    Text(data.desc,
                         style: blackTextStyle.copyWith(
                           fontSize: 14,
                           height: 1.5,

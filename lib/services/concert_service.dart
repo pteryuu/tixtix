@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tixtix/models/concerts_model.dart';
 
 class ConcertService {
-  CollectionReference _concertRef =
+  final CollectionReference _concertRef =
       FirebaseFirestore.instance.collection('concerts');
 
   Future<List<ConcertModel>> fetchConcerts() async {

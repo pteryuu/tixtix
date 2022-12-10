@@ -1,16 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tixtix/models/concerts_model.dart';
 import 'package:tixtix/shared/theme.dart';
 
 import '../event_detail.dart';
 
 class EventListItem extends StatelessWidget {
-  final dynamic eventItem;
+  final ConcertModel eventItem;
   bool first;
-  EventListItem(
-      {Key? key,
-      required this.eventItem,
-      this.first = false})
+  EventListItem({Key? key, required this.eventItem, this.first = false})
       : super(key: key);
 
   @override
@@ -18,10 +15,9 @@ class EventListItem extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-              EventDetail(data: eventItem)));
+            context,
+            MaterialPageRoute(
+                builder: (context) => EventDetail(data: eventItem)));
       },
       child: Column(
         children: [
@@ -37,12 +33,17 @@ class EventListItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
-                  flex: 1,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                    child: Image.asset(eventItem['img'], fit: BoxFit.cover),
-                  ),
-                ),
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
+                      child: Image(
+                          height: 80,
+                          width: 80,
+                          image: NetworkImage(eventItem.imageUrl
+                              .replaceFirst("file:///", "https://")),
+                          fit: BoxFit.contain),
+                    )),
                 const SizedBox(
                   width: 12,
                 ),
@@ -59,7 +60,10 @@ class EventListItem extends StatelessWidget {
                           Expanded(
                             flex: 4,
                             child: Text(
-                              eventItem['desc'],
+                              textAlign: TextAlign.start,
+                              style: blackTextStyle.copyWith(
+                                  fontWeight: medium, fontSize: 10),
+                              eventItem.desc,
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -73,10 +77,6 @@ class EventListItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          // Text(
-                          //   'something',
-                          //   style: TextStyle(color: kGreyColor, fontSize: 11),
-                          // ),
                           Text(
                             'read more',
                             style: TextStyle(color: kGreyColor, fontSize: 11),

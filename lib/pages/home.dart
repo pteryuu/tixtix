@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tixtix/consts/data.dart';
 import 'package:tixtix/cubit/concert_cubit.dart';
+import 'package:tixtix/models/concerts_model.dart';
 import 'package:tixtix/pages/profile.dart';
 import 'package:tixtix/pages/widgets/event_list_item.dart';
 import 'package:tixtix/pages/widgets/search_bar.dart';
+import 'package:tixtix/services/concert_service.dart';
 import 'package:tixtix/services/hide_keyboard.dart';
+import 'package:tixtix/shared/theme.dart';
 
 import 'widgets/carousel.dart';
 
@@ -18,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ConcertModel concert = ConcertModel(id: '');
   @override
   void initState() {
     context.read<ConcertCubit>().fetchConcerts();
@@ -27,72 +31,100 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:
+          AppBar(backgroundColor: kPrimaryColor, title: SearchBar(), actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ProfilePage()));
+            },
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            constraints: const BoxConstraints(),
+            icon: const Icon(Icons.account_circle_outlined)),
+        IconButton(
+            onPressed: () {},
+            padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+            constraints: const BoxConstraints(),
+            icon: const Icon(Icons.notifications)),
+      ]),
       body: GestureDetector(
-        onTap: () {
-          hideKeyboard(context);
-        },
-        child: SafeArea(
-          child: SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              child: CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    forceElevated: true,
-                    elevation: 1.0,
-                    backgroundColor: Colors.white,
-                    iconTheme: const IconThemeData(color: Colors.black),
-                    title: const SearchBar(),
-                    actions: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => ProfilePage()));
-                          },
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          constraints: const BoxConstraints(),
-                          icon: const Icon(Icons.account_circle_outlined)),
-                      IconButton(
-                          onPressed: () {},
-                          padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                          constraints: const BoxConstraints(),
-                          icon: const Icon(Icons.notifications))
-                    ],
-                  ),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      height: MediaQuery.of(context).size.height / 6,
-                      child: const FilterWidget(),
-                    ),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: Carousel(),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      child: Text('Events',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int idx) {
-                      return EventListItem(
-                          first: idx == 0, eventItem: data[idx]);
-                    }, childCount: data.length),
-                  )
-                ],
-              )),
-        ),
-      ),
+          onTap: () {
+            hideKeyboard(context);
+          },
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: SafeArea(
+                child: Column(
+              children: [
+                SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Carousel()),
+              ],
+            )),
+          )
+          //     SafeArea(
+          //   child: SizedBox(
+          //       width: double.infinity,
+          //       height: MediaQuery.of(context).size.height,
+          //       child: CustomScrollView(
+          //         physics: const BouncingScrollPhysics(),
+          //         slivers: [
+          //           SliverAppBar(
+          //             pinned: true,
+          //             forceElevated: true,
+          //             elevation: 1.0,
+          //             backgroundColor: Colors.white,
+          //             iconTheme: const IconThemeData(color: Colors.black),
+          //             title: const SearchBar(),
+          //             actions: [
+          //               IconButton(
+          //                   onPressed: () {
+          //                     Navigator.of(context).push(MaterialPageRoute(
+          //                         builder: (context) => ProfilePage()));
+          //                   },
+          //                   padding: const EdgeInsets.symmetric(horizontal: 8),
+          //                   constraints: const BoxConstraints(),
+          //                   icon: const Icon(Icons.account_circle_outlined)),
+          //               IconButton(
+          //                   onPressed: () {},
+          //                   padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+          //                   constraints: const BoxConstraints(),
+          //                   icon: const Icon(Icons.notifications))
+          //             ],
+          //           ),
+          //           SliverToBoxAdapter(
+          //             child: Container(
+          //               padding: const EdgeInsets.all(16),
+          //               height: MediaQuery.of(context).size.height / 6,
+          //               child: const FilterWidget(),
+          //             ),
+          //           ),
+          //           Carousel(),
+          //           const SliverToBoxAdapter(
+          //             child: Padding(
+          //               padding:
+          //                   EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          //               child: Text('Events',
+          //                   style: TextStyle(
+          //                       color: Colors.black,
+          //                       fontSize: 20,
+          //                       fontWeight: FontWeight.bold)),
+          //             ),
+          //           ),
+          //           SliverList(
+          //             delegate: SliverChildBuilderDelegate(
+          //                 (BuildContext context, int idx) {
+          //               return Container();
+
+          //               // EventListItem(
+          //               //     first: idx == 0, eventItem: concert.id);
+          //             }, childCount: concert.props.length),
+          //           )
+          //         ],
+          //       )),
+          // ),
+          ),
     );
   }
 }
