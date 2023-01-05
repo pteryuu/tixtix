@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_image/flutter_image.dart';
 import 'package:intl/intl.dart';
 import 'package:tixtix/models/concerts_model.dart';
+import 'package:tixtix/pages/choose_seat.dart';
 import 'package:tixtix/services/json_service.dart';
 import 'package:tixtix/shared/theme.dart';
 
@@ -150,7 +151,14 @@ class EventDetail extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChooseSeatPage(data),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.only(top: 3, bottom: 3),
                         primary: kPrimaryColor),
