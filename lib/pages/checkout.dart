@@ -178,6 +178,7 @@ class CheckoutPage extends StatelessWidget {
           return CustomButton(
             title: 'Bayar sekarang',
             onPressed: () {
+              print(transaction);
               context.read<TransactionCubit>().createTransaction(transaction);
             },
             margin: EdgeInsets.only(top: 30),

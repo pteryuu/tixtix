@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tixtix/models/transaction_model.dart';
+import 'package:tixtix/shared/theme.dart';
 
 /// 07:30 tetap
 /// 3 oct 2022 (ganti sesuai tgl konser, contoh toba harmoni 15 oktober 2022)
@@ -39,11 +40,13 @@ class _TicketState extends State<Ticket> {
           children: [
             Expanded(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
-                    children: const [
+                    children: [
                       Text('TIXTIX',
                           style: TextStyle(
                               fontWeight: FontWeight.w900,
@@ -54,9 +57,15 @@ class _TicketState extends State<Ticket> {
                       )
                     ],
                   ),
+                  Text(
+                    '${widget.name}',
+                    style: blackTextStyle.copyWith(
+                        fontWeight: black, fontSize: 20),
+                  ),
                   const SizedBox(
                     height: 8,
                   ),
+
                   Row(
                     children: [
                       Icon(Icons.local_activity_sharp),
@@ -64,7 +73,9 @@ class _TicketState extends State<Ticket> {
                         width: 5,
                       ),
                       Text(
-                        'Kode Pemesanan: ${widget.id}',
+                        'Kode Pemesanan: ${widget.id.toUpperCase().substring(0, 5)}',
+                        style: blackTextStyle.copyWith(
+                            fontWeight: medium, fontSize: 15),
                       )
                     ],
                   ),
@@ -82,7 +93,7 @@ class _TicketState extends State<Ticket> {
                     children: [
                       Expanded(
                         flex: 1,
-                        child: Text(widget.name,
+                        child: Text(widget.date,
                             // overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w500)),
@@ -123,16 +134,16 @@ class _TicketState extends State<Ticket> {
                   const SizedBox(
                     height: 12,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                          DateFormat('dd MMMM y')
-                              .format(DateTime.parse(widget.date)),
-                          style: const TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500))
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     Text(widget.date,
+                  //         // DateFormat('dd MMMM y')
+                  //         //     .format(DateTime.parse(widget.date)),
+                  //         style: const TextStyle(
+                  //             fontSize: 14, fontWeight: FontWeight.w500))
+                  //   ],
+                  // ),
                 ],
               ),
             )

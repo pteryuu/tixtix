@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:tixtix/cubit/auth_cubit.dart';
 import 'package:tixtix/services/auth_service.dart';
 import 'package:tixtix/shared/theme.dart';
@@ -174,6 +175,8 @@ class ProfilePage extends StatelessWidget {
                   ),
                   MenuItem(
                       onTap: () {
+                        _deleteCacheDir();
+                        _deleteAppDir();
                         context.read<AuthCubit>().signOut();
                       },
                       leading: Text(
@@ -292,5 +295,21 @@ class MenuItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> _deleteCacheDir() async {
+  final cacheDir = await getTemporaryDirectory();
+
+  if (cacheDir.existsSync()) {
+    cacheDir.deleteSync(recursive: true);
+  }
+}
+
+Future<void> _deleteAppDir() async {
+  final appDir = await getApplicationSupportDirectory();
+
+  if (appDir.existsSync()) {
+    appDir.deleteSync(recursive: true);
   }
 }

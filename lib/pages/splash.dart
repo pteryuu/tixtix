@@ -15,7 +15,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 1), () {
       User? user = FirebaseAuth.instance.currentUser;
 
       if (user == null) {

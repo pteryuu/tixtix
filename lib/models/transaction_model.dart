@@ -28,13 +28,13 @@ class TransactionModel extends Equatable {
       TransactionModel(
         concert: ConcertModel.fromJson(json['concert']['id'], json['concert']),
         id: id,
-        amountOfConcert: json['amountOfConcert'],
+        amountOfConcert: (json['amountOfConcert'] ?? 0),
         selectedSeats: json['selectedSeats'],
         insurance: json['insurance'],
         refundable: json['refundable'],
         vat: json['vat'],
-        price: json['price'],
-        grandTotal: json['grandTotal'],
+        price: (json['price'] ?? 0),
+        grandTotal: (json['grandTotal'] ?? 0),
       );
 
   @override
