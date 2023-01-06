@@ -5,7 +5,7 @@ import 'package:tixtix/cubit/auth_cubit.dart';
 import 'package:tixtix/cubit/transaction_cubit.dart';
 import 'package:tixtix/models/transaction_model.dart';
 import 'package:tixtix/pages/widgets/booking_details_item.dart';
-import 'package:tixtix/pages/widgets/custom_button.dart';
+import 'package:tixtix/pages/widgets/custom_bottom.dart';
 import 'package:tixtix/shared/theme.dart';
 
 class CheckoutPage extends StatelessWidget {
@@ -194,7 +194,7 @@ class CheckoutPage extends StatelessWidget {
           bottom: 30,
         ),
         child: Text(
-          'Ssyarat dan Ketentuan',
+          'Syarat dan Ketentuan',
           style: grayTextStyle.copyWith(
             fontSize: 12,
             fontWeight: light,

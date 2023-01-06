@@ -9,7 +9,6 @@ class SeatCubit extends Cubit<List<String>> {
     } else {
       state.remove(id);
     }
-    print(state);
     emit(List.from(state));
   }
 

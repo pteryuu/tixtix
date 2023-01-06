@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tixtix/cubit/page_cubit.dart';
-import 'package:tixtix/pages/widgets/custom_button.dart';
+import 'package:tixtix/pages/widgets/custom_bottom.dart';
 import 'package:tixtix/shared/theme.dart';
 
 class SuccessPage extends StatelessWidget {
@@ -15,18 +15,18 @@ class SuccessPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 300,
-              height: 150,
-              margin: EdgeInsets.only(bottom: 80),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/success.png',
-                  ),
-                ),
-              ),
-            ),
+            // Container(
+            //   width: 300,
+            //   height: 150,
+            //   margin: EdgeInsets.only(bottom: 80),
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //       image: AssetImage(
+            //         'assets/success.png',
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Text(
               'Pesanan Selesai',
               style: blackTextStyle.copyWith(

@@ -34,5 +34,13 @@ class ConcertModel extends Equatable {
   // TODO: implement props
   List<Object?> get props => [id, name, date, desc, location, imageUrl, price];
 
-  toJson() {}
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'date': date,
+        'desc': desc,
+        'location': location,
+        'imageUrl': imageUrl,
+        'price': price,
+      };
 }

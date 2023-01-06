@@ -126,7 +126,6 @@ class _Carousel extends State<Carousel> {
       },
       builder: (context, state) {
         if (state is ConcertSuccess) {
-          print(state.concerts);
           return ListView(
             children: [
               header(),

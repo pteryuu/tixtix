@@ -6,7 +6,7 @@ import 'package:tixtix/models/transaction_model.dart';
 /// 07:30 tetap
 /// 3 oct 2022 (ganti sesuai tgl konser, contoh toba harmoni 15 oktober 2022)
 
-class Ticket extends StatelessWidget {
+class Ticket extends StatefulWidget {
   final String id;
   final String name;
   final String date;
@@ -20,6 +20,11 @@ class Ticket extends StatelessWidget {
       required this.location})
       : super(key: key);
 
+  @override
+  State<Ticket> createState() => _TicketState();
+}
+
+class _TicketState extends State<Ticket> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -59,7 +64,7 @@ class Ticket extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        'Kode Pemesanan: ${id}',
+                        'Kode Pemesanan: ${widget.id}',
                       )
                     ],
                   ),
@@ -77,7 +82,7 @@ class Ticket extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 1,
-                        child: Text(name,
+                        child: Text(widget.name,
                             // overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w500)),
@@ -88,7 +93,7 @@ class Ticket extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             const Icon(CupertinoIcons.location),
-                            Text(location,
+                            Text(widget.location,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500))
                           ],
@@ -121,7 +126,9 @@ class Ticket extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(DateFormat('dd MMMM y').format(DateTime.parse(date)),
+                      Text(
+                          DateFormat('dd MMMM y')
+                              .format(DateTime.parse(widget.date)),
                           style: const TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w500))
                     ],

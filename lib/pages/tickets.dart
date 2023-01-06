@@ -19,31 +19,27 @@ class TicketPage extends StatefulWidget {
 }
 
 class _TicketPageState extends State<TicketPage> {
-  final List<Tab> _tabs = const <Tab>[
-    Tab(
-      child: Text(
-        'TIKET AKTIF',
-        style: TextStyle(fontWeight: FontWeight.w700),
-      ),
-    ),
-    Tab(
-      child: Text(
-        'DAFTAR TRANSAKSI',
-        style: TextStyle(fontWeight: FontWeight.w700),
-      ),
-    )
-    // Tab(icon: Icon(Icons.directions_bike)),
-  ];
+  // final List<Tab> _tabs = const <Tab>[
+  //   Tab(
+  //     child: Text(
+  //       'TIKET AKTIF',
+  //       style: TextStyle(fontWeight: FontWeight.w700),
+  //     ),
+  //   ),
+  //   Tab(
+  //     child: Text(
+  //       'DAFTAR TRANSAKSI',
+  //       style: TextStyle(fontWeight: FontWeight.w700),
+  //     ),
+  //   )
+  //   // Tab(icon: Icon(Icons.directions_bike)),
+  // ];
 
   @override
   void initState() {
+    context.read<TransactionCubit>().fetchTransactions();
     super.initState();
     // _tabController.addListener(_handleTabSelection);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -86,7 +82,7 @@ class _TicketPageState extends State<TicketPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      const TicketCategories(),
+                      // const TicketCategories(),
                       const SizedBox(
                         height: 8,
                       ),
@@ -98,42 +94,55 @@ class _TicketPageState extends State<TicketPage> {
                     ],
                   ),
                   const Icon(Icons.directions_transit),
-                  // Icon(Icons.directions_bike),
                 ],
               ));
         }
       }
-      return DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              iconTheme: const IconThemeData(color: Colors.black),
-              leading: IconButton(
-                  onPressed: () {},
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  constraints: const BoxConstraints(),
-                  icon: const Icon(Icons.account_circle_outlined)),
-              title: Text(
-                'TIXTIX',
-                style:
-                    TextStyle(color: kBlackColor, fontWeight: FontWeight.bold),
-              ),
-              centerTitle: true,
-              actions: [
-                IconButton(
-                    onPressed: () {},
-                    padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
-                    constraints: const BoxConstraints(),
-                    icon: const Icon(Icons.notifications))
-              ],
-              bottom: TabBar(
-                labelColor: kBlackColor,
-                unselectedLabelColor: kGreyColor,
-                tabs: _tabs,
-              ),
-            ),
-          ));
+      return Scaffold(
+          appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
+        leading: IconButton(
+            onPressed: () {},
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            constraints: const BoxConstraints(),
+            icon: const Icon(Icons.account_circle_outlined)),
+        title: Text(
+          'TIXTIX',
+          style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold),
+        ),
+      ));
+      // return DefaultTabController(
+      //     length: 2,
+      //     child: Scaffold(
+      //       appBar: AppBar(
+      //         backgroundColor: Colors.white,
+      //         iconTheme: const IconThemeData(color: Colors.black),
+      //         leading: IconButton(
+      //             onPressed: () {},
+      //             padding: const EdgeInsets.symmetric(horizontal: 8),
+      //             constraints: const BoxConstraints(),
+      //             icon: const Icon(Icons.account_circle_outlined)),
+      //         title: Text(
+      //           'TIXTIX',
+      //           style:
+      //               TextStyle(color: kBlackColor, fontWeight: FontWeight.bold),
+      //         ),
+      //         centerTitle: true,
+      //         actions: [
+      //           IconButton(
+      //               onPressed: () {},
+      //               padding: const EdgeInsets.fromLTRB(8, 0, 24, 0),
+      //               constraints: const BoxConstraints(),
+      //               icon: const Icon(Icons.notifications))
+      //         ],
+      //         bottom: TabBar(
+      //           labelColor: kBlackColor,
+      //           unselectedLabelColor: kGreyColor,
+      //           tabs: _tabs,
+      //         ),
+      //       ),
+      //     ));
 
       // Center(
       //   child: Text('Halaman transaksi'),

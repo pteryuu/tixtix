@@ -13,7 +13,11 @@ Color kRedColor = const Color(0xffFF0000);
 Color kBackgroundColor = const Color(0xffFAFAFA);
 Color kInactiveColor = const Color(0xffDBD7EC);
 Color kTransparantColor = Colors.transparent;
+Color kAvailableColor = Color(0xffDFF2FF);
+Color kUnavailableColor = Color(0xffEBECF1);
+Color strokeSeatColor = Color(0xff5A86A3);
 
+Color fillSeatColor = Color(0xffDFF2FF);
 TextStyle blackTextStyle = GoogleFonts.poppins(
   color: kBlackColor,
 );

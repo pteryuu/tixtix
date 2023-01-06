@@ -5,7 +5,7 @@ import 'package:tixtix/cubit/seat_cubit.dart';
 import 'package:tixtix/models/concerts_model.dart';
 import 'package:tixtix/models/transaction_model.dart';
 import 'package:tixtix/pages/checkout.dart';
-import 'package:tixtix/pages/widgets/custom_button.dart';
+import 'package:tixtix/pages/widgets/custom_bottom.dart';
 import 'package:tixtix/pages/widgets/seat_item.dart';
 import 'package:tixtix/shared/theme.dart';
 
@@ -39,7 +39,7 @@ class ChooseSeatPage extends StatelessWidget {
               width: 16,
               height: 16,
               margin: EdgeInsets.only(right: 6),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                     'assets/icon_available.png',
