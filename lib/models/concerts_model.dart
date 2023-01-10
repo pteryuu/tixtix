@@ -28,13 +28,12 @@ class ConcertModel extends Equatable {
           // desc: json['description'],
           // location: json['location'],
           // imageUrl: json['imageUrl'],
+          // price: json['price']);
           name: (json['name'] ?? '').toString(),
           date: (json['date'] ?? '').toString(),
           desc: (json['description'] ?? '').toString(),
           location: (json['location'] ?? '').toString(),
           imageUrl: (json['imageUrl'] ?? '').toString(),
-          // price: json['price']
-
           price: (json['price'] ?? 0));
 
   Map<String, dynamic> toJson() => {

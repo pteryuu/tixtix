@@ -9,7 +9,7 @@ class TransactionService {
     try {
       _transactionReference.add({
         'concert': transaction.concert.toJson(),
-        'amountOfTraveler': transaction.amountOfConcert,
+        'amountOfConcert': transaction.amountOfConcert,
         'selectedSeats': transaction.selectedSeats,
         'insurance': transaction.insurance,
         'refundable': transaction.refundable,
