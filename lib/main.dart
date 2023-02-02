@@ -5,9 +5,14 @@ import 'package:tixtix/cubit/concert_cubit.dart';
 import 'package:tixtix/cubit/page_cubit.dart';
 import 'package:tixtix/cubit/seat_cubit.dart';
 import 'package:tixtix/cubit/transaction_cubit.dart';
+import 'package:tixtix/pages/about_us.dart';
 import 'package:tixtix/pages/account.dart';
+import 'package:tixtix/pages/contact_us.dart';
+import 'package:tixtix/pages/faq.dart';
 import 'package:tixtix/pages/get_started.dart';
 import 'package:tixtix/pages/login.dart';
+import 'package:tixtix/pages/privacy_policy.dart';
+import 'package:tixtix/pages/profile.dart';
 import 'package:tixtix/pages/screen.dart';
 import 'package:tixtix/pages/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +59,13 @@ class MyApp extends StatelessWidget {
           '/screen': (context) => const ScreenPage(),
           '/terms': (context) => TCPage(),
           '/home': (context) => HomePage(),
-          '/success': (context) => SuccessPage()
+          '/success': (context) => SuccessPage(),
+          '/account': (context) => const AccountPage(),
+          'profile': (context) => ProfilePage(),
+          '/contact-us': (context) => const ContactUsPage(),
+          '/privacy-policy': (context) => const PrivacyPolicyPage(),
+          '/faq': (context) => const FAQPage(),
+          '/about-us': (context) => const AboutUsPage(),
         },
         // home: ScreenPage(),
       ),

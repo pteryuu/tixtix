@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:tixtix/cubit/transaction_cubit.dart';
 import 'package:tixtix/models/transaction_model.dart';
@@ -20,8 +20,8 @@ class TicketPage extends StatefulWidget {
 }
 
 class _TicketPageState extends State<TicketPage> {
-  late BannerAd _bannerAd;
-  bool _isBannerReady = false;
+  // late BannerAd _bannerAd;
+  // bool _isBannerReady = false;
   @override
   void initState() {
     context.read<TransactionCubit>().fetchTransactions();

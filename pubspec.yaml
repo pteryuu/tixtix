@@ -41,12 +41,19 @@ dependencies:
   firebase_performance_platform_interface: ^0.1.1+22
   flutter:
     sdk: flutter
+  flutter_background_service: ^2.4.6
   flutter_bloc: ^8.1.1
   flutter_image: ^4.1.4
+  flutter_local_notifications: ^12.0.4
+  flutter_widget_from_html: ^0.9.1
+  geocoding: ^2.0.5
+  geolocator: ^9.0.2
   google_fonts: ^3.0.1
   http: ^0.13.5
+  image_picker: ^0.8.6
   intl: ^0.17.0
   path_provider: ^2.0.11
+  permission_handler: ^10.2.0
   provider: ^6.0.4
 
 dev_dependencies:

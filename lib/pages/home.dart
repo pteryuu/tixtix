@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:tixtix/consts/data.dart';
 import 'package:tixtix/cubit/concert_cubit.dart';
 import 'package:tixtix/models/concerts_model.dart';
 import 'package:tixtix/pages/profile.dart';
-import 'package:tixtix/pages/widgets/event_list_item.dart';
 import 'package:tixtix/pages/widgets/search_bar.dart';
-import 'package:tixtix/services/concert_service.dart';
 import 'package:tixtix/services/hide_keyboard.dart';
 import 'package:tixtix/shared/theme.dart';
-
+import 'package:flutter/services.dart';
 import 'widgets/carousel.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,11 +21,70 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? _currentAddress;
+  Position? _currentPosition;
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+      _getAddressFromLatLng(_currentPosition!);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(
+            _currentPosition!.latitude, _currentPosition!.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      setState(() {
+        _currentAddress = '${place.subAdministrativeArea}';
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
   final ConcertModel concert = ConcertModel(id: '');
   @override
   void initState() {
     context.read<ConcertCubit>().fetchConcerts();
     super.initState();
+    _getCurrentPosition();
   }
 
   @override
@@ -59,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
-                    child: Carousel()),
+                    child: Carousel(_currentAddress ?? "")),
               ],
             )),
           )

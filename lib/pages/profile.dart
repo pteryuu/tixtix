@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:tixtix/cubit/auth_cubit.dart';
-import 'package:tixtix/services/auth_service.dart';
 import 'package:tixtix/shared/theme.dart';
 
+class MenuListType {
+  String label;
+  String route;
+  MenuListType({required this.label, required this.route});
+}
+
 class ProfilePage extends StatelessWidget {
-  final List<String> menuList = [
-    'Bahasa',
-    'Tentang Kami',
-    'FAQ',
-    'Syarat dan Ketentuan',
-    'Kebijakan Privasi',
-    'Hubungi Kami'
+  final List<MenuListType> menuList = [
+    // MenuListType(label: "Bahasa", route: "/profile"),
+    MenuListType(label: "Tentang Kami", route: "/about-us"),
+    MenuListType(label: "FAQ", route: "/faq"),
+    MenuListType(label: "Syarat dan Ketentuan", route: "/terms"),
+    MenuListType(label: "Kebijakan Privasi", route: "/privacy-policy"),
+    MenuListType(label: "Hubungi Kami", route: "/contact-us"),
   ];
   ProfilePage({super.key});
 
@@ -33,7 +37,7 @@ class ProfilePage extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthLoad) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -156,9 +160,11 @@ class ProfilePage extends StatelessWidget {
                     height: 18,
                   ),
                   ...menuList.map((e) => MenuItem(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, e.route);
+                        },
                         leading: Text(
-                          e,
+                          e.label,
                           style: const TextStyle(fontSize: 16),
                         ),
                       )),
@@ -175,8 +181,6 @@ class ProfilePage extends StatelessWidget {
                   ),
                   MenuItem(
                       onTap: () {
-                        _deleteCacheDir();
-                        _deleteAppDir();
                         context.read<AuthCubit>().signOut();
                       },
                       leading: Text(
@@ -295,21 +299,5 @@ class MenuItem extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-Future<void> _deleteCacheDir() async {
-  final cacheDir = await getTemporaryDirectory();
-
-  if (cacheDir.existsSync()) {
-    cacheDir.deleteSync(recursive: true);
-  }
-}
-
-Future<void> _deleteAppDir() async {
-  final appDir = await getApplicationSupportDirectory();
-
-  if (appDir.existsSync()) {
-    appDir.deleteSync(recursive: true);
   }
 }

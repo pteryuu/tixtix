@@ -1,5 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:tixtix/cubit/seat_cubit.dart';
 import 'package:tixtix/models/concerts_model.dart';
@@ -8,12 +13,88 @@ import 'package:tixtix/pages/checkout.dart';
 import 'package:tixtix/pages/widgets/custom_bottom.dart';
 import 'package:tixtix/pages/widgets/seat_item.dart';
 import 'package:tixtix/shared/theme.dart';
+import 'dart:async';
 
-class ChooseSeatPage extends StatelessWidget {
+class ChooseSeatPage extends StatefulWidget {
   final ConcertModel concert;
 
   const ChooseSeatPage(this.concert, {Key? key}) : super(key: key);
 
+  @override
+  State<ChooseSeatPage> createState() => _ChooseSeatPageState();
+}
+
+void onStart(ServiceInstance service) async {
+  DartPluginRegistrant.ensureInitialized();
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  service.on('stopService').listen((event) {
+    service.stopSelf();
+  });
+
+  int sum = 10;
+
+  Timer.periodic(const Duration(seconds: 1), (timer) async {
+    sum--;
+    if (service is AndroidServiceInstance) {
+      if (await service.isForegroundService()) {
+        flutterLocalNotificationsPlugin.show(
+            888,
+            'Countdown Service',
+            'Remaining ${sum} times ...',
+            const NotificationDetails(
+                android: AndroidNotificationDetails(
+                    'foreground', 'Foreground Service',
+                    icon: 'ic_bg_service_small', ongoing: true)));
+      }
+    }
+
+    service.invoke('update', {
+      'count': sum,
+    });
+  });
+}
+
+@pragma('vm:entry-point')
+Future<bool> onIosBackground(ServiceInstance service) async {
+  return true;
+}
+
+Future<void> initializeService() async {
+  final service = FlutterBackgroundService();
+  await service.configure(
+      iosConfiguration: IosConfiguration(
+          autoStart: false,
+          onForeground: onStart,
+          onBackground: onIosBackground),
+      androidConfiguration: AndroidConfiguration(
+          onStart: onStart,
+          isForegroundMode: false,
+          autoStart: false,
+          notificationChannelId: 'foreground',
+          initialNotificationContent: 'Foreground Service',
+          initialNotificationTitle: 'Initalizing',
+          foregroundServiceNotificationId: 888));
+
+  service.startService();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'foreground', 'Foreground Service',
+      description: 'This channel is used for important notifications',
+      importance: Importance.low);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+}
+
+class _ChooseSeatPageState extends State<ChooseSeatPage> {
+  String text = 'Stop service';
   @override
   Widget build(BuildContext context) {
     Widget title() {
@@ -32,59 +113,98 @@ class ChooseSeatPage extends StatelessWidget {
     Widget seatStatus() {
       return Container(
         margin: EdgeInsets.only(top: 30),
-        child: Row(
+        child: Column(
           children: [
-            // NOTE: AVAILABLE
-            Container(
-              width: 16,
-              height: 16,
-              margin: EdgeInsets.only(right: 6),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/icon_available.png',
+            Row(
+              children: [
+                // NOTE: AVAILABLE
+                Container(
+                  width: 16,
+                  height: 16,
+                  margin: EdgeInsets.only(right: 6),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/icon_available.png',
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Text(
-              'Tersedia',
-              style: blackTextStyle,
-            ),
-            // NOTE: SELECTED
-            Container(
-              width: 16,
-              height: 16,
-              margin: EdgeInsets.only(left: 10, right: 6),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/icon_selected.png',
+                Text(
+                  'Tersedia',
+                  style: blackTextStyle,
+                ),
+                // NOTE: SELECTED
+                Container(
+                  width: 16,
+                  height: 16,
+                  margin: EdgeInsets.only(left: 10, right: 6),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/icon_selected.png',
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Text(
-              'Terpilih',
-              style: blackTextStyle,
-            ),
-            // NOTE: UNAVAILABLE
-            Container(
-              width: 16,
-              height: 16,
-              margin: EdgeInsets.only(left: 10, right: 6),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/icon_unavailable.png',
+                Text(
+                  'Terpilih',
+                  style: blackTextStyle,
+                ),
+                // NOTE: UNAVAILABLE
+                Container(
+                  width: 16,
+                  height: 16,
+                  margin: EdgeInsets.only(left: 10, right: 6),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/icon_unavailable.png',
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Text(
+                  'Tidak tersedia',
+                  style: blackTextStyle,
+                ),
+              ],
             ),
-            Text(
-              'Tidak tersedia',
-              style: blackTextStyle,
-            ),
+            //Testinggg
+            // StreamBuilder<Map<String, dynamic>?>(
+            //   stream: FlutterBackgroundService().on('update'),
+            //   builder: (context, snapshot) {
+            //     if (!snapshot.hasData) {
+            //       // return Container();
+            //       return Text('60s', style: TextStyle(fontSize: 40));
+            //     }
+            //     final data = snapshot.data!;
+            //     final service = FlutterBackgroundService();
+            //     String? count = data['count'].toString() + 's';
+            //     if (data['count'] == 0) {
+            //       service.invoke('stopService');
+            //     }
+            //     print(count);
+            //     return Text(
+            //       count,
+            //       style: TextStyle(fontSize: 40),
+            //     );
+            //   },
+            // ),
+            // ElevatedButton(
+            //     onPressed: () async {
+            //       final service = FlutterBackgroundService();
+            //       var isRunning = await service.isRunning();
+            //       if (isRunning) {
+            //         service.invoke('stopService');
+            //         text = 'Restart Service';
+            //       } else {
+            //         service.startService();
+            //         text = 'Stop Service';
+            //       }
+            //       setState(() {});
+            //     },
+            //     child: Text(text))
           ],
         ),
       );
@@ -640,7 +760,7 @@ class ChooseSeatPage extends StatelessWidget {
                               locale: 'id',
                               symbol: 'IDR ',
                               decimalDigits: 0,
-                            ).format(state.length * concert.price),
+                            ).format(state.length * widget.concert.price),
                             style: primaryTextStyle.copyWith(
                               fontSize: 16,
                               fontWeight: semiBold,
@@ -664,14 +784,14 @@ class ChooseSeatPage extends StatelessWidget {
           return CustomButton(
             title: 'Lanjutkan pembayaran',
             onPressed: () {
-              int price = concert.price * state.length;
+              int price = widget.concert.price * state.length;
 
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => CheckoutPage(
                     TransactionModel(
-                      concert: concert,
+                      concert: widget.concert,
                       amountOfConcert: state.length,
                       selectedSeats: state.join(', '),
                       insurance: true,

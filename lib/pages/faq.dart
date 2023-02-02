@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:tixtix/consts/terms.dart';
+import 'package:tixtix/consts/faq.dart';
 import 'package:tixtix/cubit/auth_cubit.dart';
 import 'package:tixtix/shared/theme.dart';
 
-class TCPage extends StatelessWidget {
-  const TCPage({super.key});
+class FAQPage extends StatelessWidget {
+  const FAQPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class TCPage extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthLoad) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -37,21 +37,30 @@ class TCPage extends StatelessWidget {
             centerTitle: true,
             backgroundColor: Colors.white,
             title: Text(
-              'Syarat dan Ketentuan',
+              'FAQ',
               style: TextStyle(color: kBlackColor, fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(16, 20, 16, 20),
-                  child: HtmlWidget(
-                    terms,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image.asset("assets/poster-1.jpg"),
+                  const Text("Menjawab pertanyaan seputar TIXTIX!",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  Divider(
+                    color: Colors.grey.withOpacity(0.3),
+                    thickness: 2,
+                    height: 32,
                   ),
-                )
-              ],
+                  HtmlWidget(
+                    faq,
+                  )
+                ],
+              ),
             ),
           ),
         );

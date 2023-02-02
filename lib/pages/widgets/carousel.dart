@@ -13,7 +13,8 @@ import 'package:tixtix/shared/theme.dart';
 //TODO: Class ini ingin dibuat jadi list agar bisa ditaruh ke class Carousel utk melengkapi property yang ada.final data = [
 
 class Carousel extends StatefulWidget {
-  const Carousel({Key? key}) : super(key: key);
+  String location;
+  Carousel(this.location, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -40,8 +41,21 @@ class _Carousel extends State<Carousel> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Row(
+                          children: [
+                            Icon(Icons.share_location_outlined),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              widget.location,
+                              style:
+                                  blackTextStyle.copyWith(fontWeight: semiBold),
+                            ),
+                          ],
+                        ),
                         Text(
-                          'Howdy,\n${state.user.name}',
+                          'Apa kabar,\n${state.user.name}',
                           style: blackTextStyle.copyWith(
                             fontSize: 24,
                             fontWeight: semiBold,
